@@ -33,7 +33,7 @@ The adjustments are different in two scenarios: with cash and without cash
 -| With Cash | Without Cash
 -|-----------|-------------
 adjustment01 | interest income of cash positions + interest income of CN Energy positions | realized return of cash positions + interest income of CN Energy positions
-adjustment02 | interest income of cash positions + interest income of CN Energy positions + unrealized gain loss of CN Energy positions | total return of cash positions + unrealized gain loss of CN Energy positions + interest income of CN Energy positions + unrealized gain loss of CN Energy positions
+adjustment02 | interest income of cash positions + interest income of CN Energy positions + unrealized gain loss of CN Energy positions | total return of cash positions + unrealized gain loss of CN Energy positions + interest income of CN Energy positions
 adjustment03 | AccruedInterest of CN Energy positions + impairment (case 1) or impairment (case 2) | AccruedInterest and MarketValueBook of cash positions + AccruedInterest of CN Energy positions + impairment (case 1); AccruedInterest and MarketValueBook of cash positions + impairment (case 2)
 
 Where the terms are defined as below:
