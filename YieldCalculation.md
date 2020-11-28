@@ -42,5 +42,5 @@ Where the terms are defined as below:
 2. unrealized gain loss: add up UnrealizedPrice, UnrealizedFX, UnrealizedCross of a position;
 3. case 1 or case 2: we will tell which months belong to case 1 and which belong to case 2 by run time;
 4. impairement: a fixed number known by run time;
-5. cash position: a position whose "SortKey" field equals "Cash and Equivalents";
-6. CN Energy position: a position whose "Description" field contains "CERCG".
+5. cash position: a position whose "SortKey" field equals "Cash and Equivalents" and "LongShortDescription" field equals "Cash Long";
+6. CN Energy position: a position whose "Description" field contains "CERCG" and "SortKey" field equals "Corporate Bond".
