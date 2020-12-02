@@ -1,26 +1,27 @@
-# Yield Calculation
+# calculate_yield.py
 
-The output of yield calculation looks like below. The following output needs to be calculated in two scenarios: with cash and without cash.
+The output looks something like below. The following output needs to be calculated in two scenarios: with cash and without cash.
 
-Period | Realized Return | Total Return | Average NAV | Realized Return Rate | Total Return Rate
--------|-----------------|--------------|-------------|----------------------|-------------------
-2020-01| | | | | |
-2020-02| | | | | |
-2020-03| | | | | |
-XXX    | | | | | |
+Month | Accumulated Realized Return | Return Rate | Accumulated Total Return | Return Rate | Average Nav
+------|-----------------------------|-------------|--------------------------|------------|------------
+1 | | | | | |
+2 | | | | | |
+... | | | | | |
+X | | | | | |
 
-The meaning of the columns are:
+Where,
 
 Item | Meaning
 -----|---------
-Realized Return | The accumulated realized return per month from year beginning to now. For the case of 2020 Mar, it means adding up the realized return of 2020 Jan, 2020 Feb and 2020 Mar.
-Total Return | Similar to the above, but on total return numbers.
+Accumulated Realized Return | The accumulated realized return per month from year beginning to now. For the case of 2020 Mar, it means adding up the realized return of 2020 Jan, 2020 Feb and 2020 Mar.
+Accumulated Total Return | Similar to the above, but on total return numbers.
 Average NAV | The average of per month NAV since last year end. For the case of 2020 Mar, it means adding up NAV of 2019 Dec, 2020 Jan, 2020 Feb and 2020 Mar, then divide by 4.
-Realized Return Rate | Realized Return / Average NAV
-Total Return Rate | Total Return / Average NAV
+Return Rate | Accumulated Return / Average NAV
 
-## Per Month Data
-To get the final output, we need to work out the realized return, total return and NAV per month first. That means adding up certain columns from the profit and loss report per position, then subtract an adjustment amount.
+
+
+## Calculation Methodology
+Here is how to calculate realized return, total return and NAV per month.
 
 Item | Columns | Adjustment |Data Source
 -----|--------|--------------|-----------
@@ -40,7 +41,8 @@ Where the terms are defined as below:
 
 1. interest income: add up Interest, Dividend, OtherIncome of a position;
 2. unrealized gain loss: add up UnrealizedPrice, UnrealizedFX, UnrealizedCross of a position;
-3. case 1 or case 2: we will tell which months belong to case 1 and which belong to case 2 by run time;
-4. impairement: a fixed number known by run time;
-5. cash position: a position whose "SortKey" field equals "Cash and Equivalents" and "LongShortDescription" field equals "Cash Long";
-6. CN Energy position: a position whose "Description" field contains "CERCG" and "SortKey" field equals "Corporate Bond".
+3. case 1: after the cutoff month, which is the last month fund accounting team booked offset for CN Energy interest income;
+4. case 2: on or before the cutoff month;
+5. impairement: a fixed number known by run time;
+6. cash position: a position whose "SortKey" field equals "Cash and Equivalents" and "LongShortDescription" field equals "Cash Long";
+7. CN Energy position: a position whose "Description" field contains "CERCG" and investment type is "Corporate Bond".
