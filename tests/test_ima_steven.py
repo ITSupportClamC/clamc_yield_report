@@ -3,7 +3,8 @@
 
 import unittest2
 from clamc_yield_report.ima import getCurrentDirectory \
-								, getDailyInterestAccrualDetailPositions
+								, getDailyInterestAccrualDetailPositions \
+								, getTaxlotInterestIncome
 from os.path import join
 
 
@@ -20,6 +21,41 @@ class TestImaSteven(unittest2.TestCase):
 		positions = list(getDailyInterestAccrualDetailPositions(inputFile))
 		self.assertEqual(19641, len(positions))
 		self.verifyDailyTaxlotAccrualDetailPosition(positions[2])
+
+
+
+	def testGetTaxlotInterestIncome(self):
+		d = getTaxlotInterestIncome(
+				list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2019-12.txt')
+					))
+
+			  , list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-01.txt')
+					))
+			)
+
+		self.assertEqual(True, all(d[key] >=0 for key in d))
+
+		# Total interest income in 2020 Jan
+		self.assertAlmostEqual(790093159.63, sum(d[key] for key in d), 2)
+
+
+
+	def testGetTaxlotInterestIncome2(self):
+		d = getTaxlotInterestIncome(
+				list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-01.txt')
+					))
+
+			  , list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-02.txt')
+					))
+			)
+
+		# going to cross check per position, whether
+		# investment level interest income == sum of tax lot level interest income
+		# FIXME: to be implemented
 
 
 
