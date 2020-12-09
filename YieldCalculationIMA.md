@@ -8,10 +8,10 @@ In the daily interest accrual details report, each line is a record of the amoun
 
 Field Name | Meaning 
 -----------|---------
-Date | the date on which the interest accrued
+Date | the date
 LotID | the tax lot ID
 LotQuantity | quantity of the tax lot
-LotSumOfEndBalanceBook | accrued interest of the tax on the day
+LotSumOfEndBalanceBook | ending value of accrued interest of the tax on the day
 
 To calculate interest income of a tax lot during a period, we need two inputs:
 
@@ -19,7 +19,7 @@ To calculate interest income of a tax lot during a period, we need two inputs:
 
 2. daily interest accrual details report with a period end date just one day before the start date of the current period report (*previous period report*).
 
-interest income of a tax lot = accrued interest of current period report - accrued interest of previous period report + coupon payment at current period report
+interest income of a tax lot = accrued interest of current period - accrued interest of previous period + coupon payment at current period
 
 
 ### Accrued Interest
@@ -45,4 +45,4 @@ Coupon payment of a tax lot during a period = sum of coupon received by the tax 
 
 A bond can receive zero or more coupon payments during a period, similar for a tax lot. When a coupon payment happens, there will be one or more lines with column LotQuantity = 0 in the daily interest accrual details report, with LotSumOfChangeInAIBook column as the book amount of the coupon payment.
 
-Refer to Calculate tax lot interest income from daily interest accruals.xlsx for more details.
+Refer to "Calculate tax lot interest income from daily interest accruals.xlsx" in the reference folder for more details.
