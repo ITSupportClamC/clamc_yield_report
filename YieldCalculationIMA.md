@@ -4,17 +4,26 @@ For yield calculation IMA method.
 
 
 ## Interest Income of a Tax Lot
-To calculate interest income per tax lot, we need two inputs:
+In the daily interest accrual details report, each line is a record of the amount of interest accrued by a tax lot on a certain day. A tax lot is uniquely identified by the tax lot ID.
 
-1. daily interest accrual details report during a period (*current period report*);
+Field Name | Meaning 
+-----------|---------
+Date | the date on which the interest accrued
+LotID | the tax lot ID
+LotQuantity | quantity of the tax lot
+LotSumOfEndBalanceBook | accrued interest of the tax on the day
+
+To calculate interest income of a tax lot during a period, we need two inputs:
+
+1. daily interest accrual details report during the period (*current period report*);
 
 2. daily interest accrual details report with a period end date just one day before the start date of the current period report (*previous period report*).
 
-interest income of a tax lot = accrued interest at current period report - accrued interest at previous period report + coupon payment at current period report
+interest income of a tax lot = accrued interest of current period report - accrued interest of previous period report + coupon payment at current period report
 
 
 ### Accrued Interest
-Accrued interest is shown in the LotSumOfEndBalanceBook column of a daily interest accrual details report. The accrued interest of a tax lot during a period is the accrued interest of the tax lot on the last day the tax lot appears during that period.
+The accrued interest of a tax lot of a period is the accrued interest of the tax lot on the last day the tax lot appears during that period.
 
 For example, a tax lot appears like this in the report
 
