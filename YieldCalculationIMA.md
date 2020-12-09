@@ -24,10 +24,7 @@ interest income = ending value of accrued interest of the period - starting valu
 
 Where,
 
-1. Ending value of accrued interest of the period: LotSumOfEndBalanceBook of the tax lot on either:
-
-	1. the last day of the period, or
-	2. the last day the tax lot appears in the period when LotQuantity > 0.
+1. Ending value of accrued interest of the period: LotSumOfEndBalanceBook of the tax lot on the last day the tax lot appears in the period when LotQuantity > 0.
 
 2. Starting value of accrued interest of the period: it's either:
 
