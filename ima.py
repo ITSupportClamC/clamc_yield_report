@@ -2,7 +2,14 @@
 #
 # Functions needed to calculate IMA yield
 # 
+from os.path import abspath, dirname
 
+
+
+getCurrentDirectory = lambda : \
+	dirname(abspath(__file__))
+
+	
 
 
 def getDailyInterestAccrualDetailPositions(file):
