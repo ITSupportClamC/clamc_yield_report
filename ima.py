@@ -11,7 +11,6 @@ getCurrentDirectory = lambda : \
 
 	
 
-
 def getDailyInterestAccrualDetailPositions(file):
 	"""
 	[String] file => [Iterable] posiitons
@@ -35,15 +34,13 @@ def getDailyInterestAccrualDetailPositions(file):
 
 
 
-def getTaxlotInterestIncome( previousPeriodPositions
-						   , currentPeriodPositions):
+def getTaxlotInterestIncome(positions):
 	"""
-	[List] previousPeriodPositions,
-	[List] currentPeriodPositions
+	[List] positions
 	=> [Dictionary] ([String] tax lot id -> [Float] interest income)
 
-	From positions from the previous period report (daily interest accrual)
-	and the current period report, compute interest income for each tax lot.
+	From positions of a daily interest accrual detail report, compute
+	interest income for each tax lot.
 	"""
 	# FIXME: add implementation
 	return {}
