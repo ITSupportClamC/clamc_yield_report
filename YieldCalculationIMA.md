@@ -27,7 +27,7 @@ A tax lot is uniquely identified by its tax lot id. There could be one or more i
 
 Interest income of a tax lot during a period is calculated as:
 
-interest income = ending value of accrued interest of the period - starting value of accrued interest of the period + interest received during the period
+	interest income = ending value of accrued interest of the period - starting value of accrued interest of the period + interest received during the period
 
 Where,
 
@@ -50,12 +50,10 @@ When the above happens, say it's on day D0 and for bond BB, there will be one or
 
 then we have:
 
-total amount of interest received = sum of LotSumOfChangeInAIBook of such interest payment events
+	total amount of interest received = sum of LotSumOfChangeInAIBook of such interest payment events
 
-Then coupon received by a tax lot of bond BB on day D0 is the pro-rata share of the total amount of interest received based on its tax lot quantity.
-
-Refer to "Calculate tax lot interest income from daily interest accruals.xlsx" in the reference folder for more details.
+Then coupon received by a tax lot of bond BB on day D0 is the pro-rata share of the total amount of interest received based on its tax lot quantity. Refer to "Calculate tax lot interest income from daily interest accruals.xlsx" in the reference folder for more details.
 
 Note that a bond can have interest payment events on multiple days during a period, so does a tax lot. Therefore, 
 
-interest received by a tax lot = sum of interest received by the tax lot from all such events during the period.
+	interest received by a tax lot = sum of interest received by the tax lot from all such events during the period.
