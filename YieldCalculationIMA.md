@@ -41,9 +41,9 @@ When an interest payment event occurs, one or more tax lots could receive intere
 
 1. A bond matures or is called;
 2. A bond pays coupon;
-3. A sale of a bond position (the whole or part of) occurs.
+3. A bond position (the whole or a part of) is sold.
 
-When the above happens, say it's on day D0 and for bond BB, there will be one or more interest payment which satisfy:
+When the above happens, say it's on day D0 and for bond BB, there will be one or more interest payment events which satisfy:
 
 1. Date = D0;
 2. Investment = BB.
@@ -52,10 +52,10 @@ then we have:
 
 total amount of interest received = sum of LotSumOfChangeInAIBook of such interest payment events
 
-Then coupon received by each tax lot of bond BB on day D0 is the pro-rata share of the total coupon payment according to the tax lot quantity.
+Then coupon received by a tax lot of bond BB on day D0 is the pro-rata share of the total amount of interest received based on its tax lot quantity.
 
 Refer to "Calculate tax lot interest income from daily interest accruals.xlsx" in the reference folder for more details.
 
-Note that a bond can have such events on multiple days during a period, so does a tax lot. Therefore, 
+Note that a bond can have interest payment events on multiple days during a period, so does a tax lot. Therefore, 
 
-coupon received by a tax lot = sum of interest received by the tax lot from all such events during the period.
+interest received by a tax lot = sum of interest received by the tax lot from all such events during the period.
