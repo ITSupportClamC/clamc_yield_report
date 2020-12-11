@@ -27,10 +27,6 @@ class TestImaSteven(unittest2.TestCase):
 	def testGetTaxlotInterestIncome(self):
 		d = getTaxlotInterestIncome(
 				list(getDailyInterestAccrualDetailPositions(
-						join(getCurrentDirectory(), 'samples', 'daily interest 2019-12.txt')
-					))
-
-			  , list(getDailyInterestAccrualDetailPositions(
 						join(getCurrentDirectory(), 'samples', 'daily interest 2020-01.txt')
 					))
 			)
@@ -45,10 +41,6 @@ class TestImaSteven(unittest2.TestCase):
 	def testGetTaxlotInterestIncome2(self):
 		d = getTaxlotInterestIncome(
 				list(getDailyInterestAccrualDetailPositions(
-						join(getCurrentDirectory(), 'samples', 'daily interest 2020-01.txt')
-					))
-
-			  , list(getDailyInterestAccrualDetailPositions(
 						join(getCurrentDirectory(), 'samples', 'daily interest 2020-02.txt')
 					))
 			)
