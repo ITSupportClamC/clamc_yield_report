@@ -31,6 +31,17 @@ class TestImaSteven(unittest2.TestCase):
 					))
 			)
 
+		# CNOOC 7.5 07/30/39
+		self.assertAlmostEqual(239735.21, d['1104216'], 2)
+		self.assertAlmostEqual(239735.21, d['1104217'], 2)
+		self.assertAlmostEqual(239735.21, d['1104496'], 2)
+		self.assertAlmostEqual( 47947.05, d['1104497'], 2)
+		self.assertAlmostEqual(144793.52, d['1109831'], 2)
+		self.assertAlmostEqual(240634.82, d['1110346'], 2)
+
+		# GBHK 2.93 01/13/20
+		self.assertAlmostEqual( 47104.76, d['1108340'], 2)
+
 		self.assertEqual(True, all(d[key] >=0 for key in d))
 
 		# Total interest income in 2020 Jan
@@ -45,9 +56,51 @@ class TestImaSteven(unittest2.TestCase):
 					))
 			)
 
-		# going to cross check per position, whether
-		# investment level interest income == sum of tax lot level interest income
-		# FIXME: to be implemented
+		# RPCUH 6 08/31/36 REGS
+		self.assertAlmostEqual( 11530.44, d['1006824'], 2)
+		self.assertAlmostEqual( 19217.39, d['1006825'], 2)
+		self.assertAlmostEqual( 19217.39, d['1006826'], 2)
+		self.assertAlmostEqual(172956.53, d['1008174'], 2)
+		self.assertAlmostEqual( 65339.13, d['1008175'], 2)
+		self.assertAlmostEqual( 38434.78, d['1008176'], 2)
+		self.assertAlmostEqual(172956.53, d['1008177'], 2)
+		self.assertAlmostEqual(3651304.52, d['1021956'], 2)
+
+
+
+	def testGetTaxlotInterestIncome3(self):
+		d = getTaxlotInterestIncome(
+				list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-03.txt')
+					))
+			)
+
+		# BCHINA V3.6 PERP
+		self.assertAlmostEqual( 349872.08, d['1115230'], 2)
+		self.assertAlmostEqual(  42323.24, d['1115231'], 2)
+		self.assertAlmostEqual(1269697.06, d['1115402'], 2)
+		self.assertAlmostEqual( 781119.09, d['1115403'], 2)
+		self.assertAlmostEqual(  87468.02, d['1115431'], 2)
+		self.assertAlmostEqual(7025.19, d['1118798'], 2)
+		self.assertAlmostEqual(7025.19, d['1118799'], 2)
+		self.assertAlmostEqual(7025.19, d['1118800'], 2)
+		self.assertAlmostEqual(7025.19, d['1118801'], 2)
+		self.assertAlmostEqual(7025.19, d['1118802'], 2)
+		self.assertAlmostEqual(35125.95, d['1118803'], 2)
+
+
+
+	def testGetTaxlotInterestIncome4(self):
+		d = getTaxlotInterestIncome(
+				list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-04.txt')
+					))
+			)
+
+		# CHIOLI 5.5 11/10/20
+		self.assertAlmostEqual( 7141.98, d['1005742'], 2)
+		self.assertAlmostEqual(17696.16, d['1005791'], 2)
+		self.assertAlmostEqual(88480.79, d['1005793'], 2)
 
 
 
