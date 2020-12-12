@@ -44,24 +44,8 @@ class TestImaSteven(unittest2.TestCase):
 
 		self.assertEqual(True, all(d[key] >=0 for key in d))
 
-<<<<<<< HEAD
-		# For GBHK 2.93 01/13/20
-		self.assertAlmostEqual(47104.76, d['1108340'], 2)
-
-		# For HKTB 0 04/29/20 91
-		self.assertAlmostEqual(239735.21, d['1104216'], 2)
-		self.assertAlmostEqual(239735.21, d['1104217'], 2)
-		self.assertAlmostEqual(239735.21, d['1104496'], 2)
-		self.assertAlmostEqual(47947.05, d['1104497'], 2)
-		self.assertAlmostEqual(144793.52, d['1109831'], 2)
-		self.assertAlmostEqual(240634.82, d['1110346'], 2)
-
-		# Total interest income in 2020 Jan
-		self.assertAlmostEqual(790093159.63, sum(d[key] for key in d), 2)
-=======
 		# Total interest income of bonds in 2020 Jan
 		self.assertAlmostEqual(790089428.94, sum(d[key] for key in d), 2)
->>>>>>> origin/main
 
 
 
