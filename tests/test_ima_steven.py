@@ -52,7 +52,7 @@ class TestImaSteven(unittest2.TestCase):
 	def testGetTaxlotInterestIncome2(self):
 		d = getTaxlotInterestIncome(
 				list(getDailyInterestAccrualDetailPositions(
-						join(getCurrentDirectory(), 'samples', 'daily interest 2020-03.txt')
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-02.txt')
 					))
 			)
 
