@@ -11,7 +11,7 @@ from constants import Constants
 from datetime import datetime
 from io import StringIO
 from os.path import abspath, dirname
-from utils import Utils
+from clamc_yield_report.utils import Utils
 
 #-- These 3 functions  for running the test case provided
 getCurrentDirectory = lambda : \

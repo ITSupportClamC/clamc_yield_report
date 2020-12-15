@@ -20,7 +20,7 @@ from constants import Constants
 from os import listdir
 from os.path import isfile, join
 from os import walk
-from utils import Utils
+from clamc_yield_report.utils import Utils
 
 class Report:
 
