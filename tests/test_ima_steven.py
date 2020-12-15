@@ -15,7 +15,6 @@ class TestImaSteven(unittest2.TestCase):
 		super(TestImaSteven, self).__init__(*args, **kwargs)
 
 
-
 	def testReadDailyInterestAccrualDetailTxtReport(self):
 		inputFile = join(getCurrentDirectory(), 'samples', 'daily interest 2020-01.txt')
 		positions = list(getDailyInterestAccrualDetailPositions(inputFile))
@@ -44,8 +43,16 @@ class TestImaSteven(unittest2.TestCase):
 
 		self.assertEqual(True, all(d[key] >=0 for key in d))
 
-		# Total interest income of bonds in 2020 Jan
-		self.assertAlmostEqual(790089428.94, sum(d[key] for key in d), 2)
+		"""
+		Total interest income of bonds in 2020 Jan
+
+		Total interest income from the profit loss report is
+		811,203,318.61, a difference of 0.0141%. This is due to
+		inaccurate ending AI of some positions (52 out of 125)
+		in the daily interest accrual detail report. The ending AI
+		from the tax lot appraisal report is accurate.
+		"""
+		self.assertAlmostEqual(811088743.30, sum(d[key] for key in d), 2)
 
 
 
@@ -67,8 +74,10 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual(3651304.52, d['1021956'], 2)
 
 		# Total interest income of bonds in 2020 Feb
+		# Matches exactly with the total interest income from
+		# profit loss report.
 		self.assertEqual(True, all(d[key] >=0 for key in d))
-		self.assertAlmostEqual(734971245.71, sum(d[key] for key in d), 2)
+		self.assertAlmostEqual(755655112.07, sum(d[key] for key in d), 2)
 
 
 
@@ -93,8 +102,10 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual(35125.95, d['1118803'], 2)
 
 		# Total interest income of bonds in 2020 Mar
+		# It's 808,319,689.00 from profit loss report, here is a
+		# difference arround 0.0042%.
 		self.assertEqual(True, all(d[key] >=0 for key in d))
-		self.assertAlmostEqual(787350790.14, sum(d[key] for key in d), 2)
+		self.assertAlmostEqual(808353818.31, sum(d[key] for key in d), 2)
 
 
 
@@ -110,9 +121,11 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual(17696.16, d['1005791'], 2)
 		self.assertAlmostEqual(88480.79, d['1005793'], 2)
 
-		# Total interest income of bonds in 2020 Apr
+		# Total interest income of bonds in 2020 Apr is 706,267,464.75 
+		# from profit loss report. The relative difference should be 
+		# less than 0.02%
 		self.assertEqual(True, all(d[key] >=0 for key in d))
-		self.assertAlmostEqual(805280593.80, sum(d[key] for key in d), 2)
+		self.assertTrue(abs(sum(d[key] for key in d)/706267464.75) < 0.0002)
 
 
 
