@@ -20,6 +20,7 @@ from constants import Constants
 from os import listdir
 from os.path import isfile, join
 from os import walk
+from utils import Utils
 
 class Report:
 
@@ -60,7 +61,7 @@ class Report:
 		filepaths = [upload_dir + "/" + s for s in filepaths]
 
 		#-- split iterator into 2 for both functions to loop through	
-		files = self._create_iterator(filepaths)
+		files = Utils.create_iterator(filepaths)
 		#-- duplicate iterator files into 2 for feeding 2 functions below
 		files, files2 = tee(files)
 
@@ -121,7 +122,7 @@ class Report:
 			return
 		
 		#-- get the file type
-		filetype = self._get_file_type(filename)
+		filetype = Utils.get_file_type(filename)
 		#-- if the file is unknown, just skip this file
 		if (filetype == Constants.FILETYPE_UNKNOWN):
 			self.logger.warn("This file type is unknown: " + filename)
@@ -204,7 +205,7 @@ class Report:
 				pos['UnrealizedFX'] = parseFloatNum("UnrealizedFX", pos, row_count)
 				pos['UnrealizedCross'] = parseFloatNum("UnrealizedCross", pos, row_count)
 
-		positions = self._create_iterator(list_positions)
+		positions = Utils.create_iterator(list_positions)
 		if (error_flag):
 			error_rows = error_rows[:-2] + ". " + Constants.BG_NORMAL + "\n======================================================"
 			self.logger.error(Constants.BG_WARNING + "Invest Not a float. Replace as 0. Row: " + error_rows)
@@ -379,7 +380,7 @@ class Report:
 		#-- go through each file
 		for each_file in input_files:
 			#-- check if file is a "profit and loss" file exactly
-			if (self._get_file_type(each_file) == Constants.FILETYPE_PROFIT_LOSS):
+			if (Utils.get_file_type(each_file) == Constants.FILETYPE_PROFIT_LOSS):
 				#-- log the current working file
 				self.logger.debug(Constants.BG_OKBLUE + "Retrieved file: " + Constants.BG_OKGREEN + str(each_file) + Constants.BG_NORMAL)
 
@@ -403,8 +404,8 @@ class Report:
 		self.logger.debug(Constants.BG_OKBLUE + "Accumulate Total Returns monthly iterated: " + str(accumulate_total_returns_list) + Constants.BG_NORMAL)
 
 		#-- return the results
-		accumulate_realized_returns = self._create_iterator(accumulate_realized_returns_list)
-		accumulate_total_returns = self._create_iterator(accumulate_total_returns_list)
+		accumulate_realized_returns = Utils.create_iterator(accumulate_realized_returns_list)
+		accumulate_total_returns = Utils.create_iterator(accumulate_total_returns_list)
 		return accumulate_realized_returns, accumulate_total_returns
 
 	def getAverageNavFromFiles(self, input_with_cash, input_cutoff_month, input_impairment, input_last_year_end_nav, input_files):
@@ -427,7 +428,7 @@ class Report:
 		#-- go through each file
 		for each_file in input_files:
 			#-- check if file is an "investment positions" file exactly
-			if (self._get_file_type(each_file) == Constants.FILETYPE_INVESTMENT):
+			if (Utils.get_file_type(each_file) == Constants.FILETYPE_INVESTMENT):
 			#-- get metaData, positions & mouthly nav with previous functions
 				metaData, positions = self.getPositions(each_file)
 				mouthly_NAV = self.getNavFromPositions(input_with_cash, input_cutoff_month, input_impairment, metaData, positions)
@@ -449,22 +450,22 @@ class Report:
 		self.logger.debug(Constants.BG_OKBLUE + "Averge NAV monthly iterated: " + str(accumulate_NAV_list) + Constants.BG_NORMAL)
 		
 		#-- return the result
-		NAV = self._create_iterator(accumulate_NAV_list)
+		NAV = Utils.create_iterator(accumulate_NAV_list)
 		return NAV
 
 	#-- return and indicate if the file is one of the following
 	#-- 	1: investment position
 	#--		2: profit loss
-	def _get_file_type(self, input_filepath):
-		head, filename = os.path.split(input_filepath)
-		if (Constants.FILENAME_INVESTMENT_POSITION in filename.lower()):
-			return Constants.FILETYPE_INVESTMENT
-		elif (Constants.FILENAME_PROFIT_LOSS in filename.lower()):
-			return Constants.FILETYPE_PROFIT_LOSS
-		else:
-			return Constants.FILETYPE_UNKNOWN
+	# def _get_file_type(self, input_filepath):
+	# 	head, filename = os.path.split(input_filepath)
+	# 	if (Constants.FILENAME_INVESTMENT_POSITION in filename.lower()):
+	# 		return Constants.FILETYPE_INVESTMENT
+	# 	elif (Constants.FILENAME_PROFIT_LOSS in filename.lower()):
+	# 		return Constants.FILETYPE_PROFIT_LOSS
+	# 	else:
+	# 		return Constants.FILETYPE_UNKNOWN
 
 	#-- function for constucting iterator
-	def _create_iterator(self, input_list):
-		for item in input_list:
-			yield item
+	# def _create_iterator(self, input_list):
+	# 	for item in input_list:
+	# 		yield item

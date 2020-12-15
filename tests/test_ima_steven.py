@@ -2,7 +2,7 @@
 # 
 
 import unittest2
-from clamc_yield_report.ima import getCurrentDirectory \
+from ima import getCurrentDirectory \
 								, getDailyInterestAccrualDetailPositions \
 								, getTaxlotInterestIncome
 from os.path import join
@@ -10,7 +10,9 @@ from os.path import join
 
 
 def getCNEnergyTaxlots():
-	return set(('1005226', '1008069', '1005786', '1008093'))
+	#1010330 apeears on for 2020-02
+	#'1005226', '1008069', '1005786', '1008093' apeears on 2020-04
+	return set(('1010330', '1005226', '1008069', '1005786', '1008093'))
 
 
 
@@ -53,7 +55,6 @@ class TestImaSteven(unittest2.TestCase):
 
 		"""
 		Total interest income of bonds in 2020 Jan
-
 		Total interest income from the profit loss report is
 		811,203,318.61, a difference of 0.0141%. This is due to
 		inaccurate ending AI of some positions (52 out of 125)
@@ -142,7 +143,7 @@ class TestImaSteven(unittest2.TestCase):
 			True
 		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
 		)
-		self.assertTrue(abs(sum(d[key] for key in d)/706267464.75) < 0.0002)
+		self.assertTrue((1 - abs(sum(d[key] for key in d)/706267464.75)) < 0.0002)
 
 
 

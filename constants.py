@@ -1,6 +1,7 @@
 import os
 
 class Constants:
+    #---- For report.py
     #-- colouring command-line outputs
     ENABLE_LOG_COLOR = False
     BG_OKBLUE = '\033[94m' if ENABLE_LOG_COLOR else ""
@@ -18,3 +19,6 @@ class Constants:
     #-- filename prefix of each filetype
     FILENAME_INVESTMENT_POSITION = "investment positions"
     FILENAME_PROFIT_LOSS = "profit loss"
+
+    #---- For ima.py
+    FILENAME_DAILY_INTEREST = "daily interest"
