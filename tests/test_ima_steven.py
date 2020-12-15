@@ -9,6 +9,11 @@ from os.path import join
 
 
 
+def getCNEnergyTaxlots():
+	return set(('1005226', '1008069', '1005786', '1008093'))
+
+
+
 class TestImaSteven(unittest2.TestCase):
 
 	def __init__(self, *args, **kwargs):
@@ -41,7 +46,10 @@ class TestImaSteven(unittest2.TestCase):
 		# GBHK 2.93 01/13/20
 		self.assertAlmostEqual( 47104.76, d['1108340'], 2)
 
-		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertEqual(
+			True
+		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
+		)
 
 		"""
 		Total interest income of bonds in 2020 Jan
@@ -76,7 +84,10 @@ class TestImaSteven(unittest2.TestCase):
 		# Total interest income of bonds in 2020 Feb
 		# Matches exactly with the total interest income from
 		# profit loss report.
-		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertEqual(
+			True
+		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
+		)
 		self.assertAlmostEqual(755655112.07, sum(d[key] for key in d), 2)
 
 
@@ -104,7 +115,10 @@ class TestImaSteven(unittest2.TestCase):
 		# Total interest income of bonds in 2020 Mar
 		# It's 808,319,689.00 from profit loss report, here is a
 		# difference arround 0.0042%.
-		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertEqual(
+			True
+		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
+		)
 		self.assertAlmostEqual(808353818.31, sum(d[key] for key in d), 2)
 
 
@@ -124,7 +138,10 @@ class TestImaSteven(unittest2.TestCase):
 		# Total interest income of bonds in 2020 Apr is 706,267,464.75 
 		# from profit loss report. The relative difference should be 
 		# less than 0.02%
-		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertEqual(
+			True
+		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
+		)
 		self.assertTrue(abs(sum(d[key] for key in d)/706267464.75) < 0.0002)
 
 
