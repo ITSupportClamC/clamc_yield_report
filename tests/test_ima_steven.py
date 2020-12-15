@@ -45,7 +45,7 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertEqual(True, all(d[key] >=0 for key in d))
 
 		# Total interest income of bonds in 2020 Jan
-		# self.assertAlmostEqual(790089428.94, sum(d[key] for key in d), 2)
+		self.assertAlmostEqual(790089428.94, sum(d[key] for key in d), 2)
 
 
 
@@ -65,6 +65,10 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual( 38434.78, d['1008176'], 2)
 		self.assertAlmostEqual(172956.53, d['1008177'], 2)
 		self.assertAlmostEqual(3651304.52, d['1021956'], 2)
+
+		# Total interest income of bonds in 2020 Feb
+		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertAlmostEqual(734971245.71, sum(d[key] for key in d), 2)
 
 
 
@@ -88,6 +92,10 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual(7025.19, d['1118802'], 2)
 		self.assertAlmostEqual(35125.95, d['1118803'], 2)
 
+		# Total interest income of bonds in 2020 Mar
+		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertAlmostEqual(787350790.14, sum(d[key] for key in d), 2)
+
 
 
 	def testGetTaxlotInterestIncome4(self):
@@ -101,6 +109,10 @@ class TestImaSteven(unittest2.TestCase):
 		self.assertAlmostEqual( 7141.98, d['1005742'], 2)
 		self.assertAlmostEqual(17696.16, d['1005791'], 2)
 		self.assertAlmostEqual(88480.79, d['1005793'], 2)
+
+		# Total interest income of bonds in 2020 Apr
+		self.assertEqual(True, all(d[key] >=0 for key in d))
+		self.assertAlmostEqual(805280593.80, sum(d[key] for key in d), 2)
 
 
 
