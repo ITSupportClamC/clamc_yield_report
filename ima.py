@@ -7,11 +7,16 @@ import re
 import logging
 import logging.config
 import os
-from constants import Constants
 from datetime import datetime
 from io import StringIO
 from os.path import abspath, dirname
 from clamc_yield_report.utils import Utils
+from clamc_yield_report.constants import Constants
+
+
+import logging
+logger = logging.getLogger(__name__)
+
 
 #-- These 3 functions  for running the test case provided
 getCurrentDirectory = lambda : \
@@ -27,8 +32,9 @@ class ReportIMA:
 
 	def __init__(self):
 		#=========\add logger from configuration files\=========
-		logging.config.fileConfig("logging_config.ini", defaults={'date':datetime.now().date().strftime('%Y-%m-%d')})
-		self.logger = logging.getLogger("sLogger")	
+		# logging.config.fileConfig("logging_config.ini", defaults={'date':datetime.now().date().strftime('%Y-%m-%d')})
+		# self.logger = logging.getLogger("sLogger")
+		self.logger = logger
 
 	def run(self, filename):
 		self.logger.info('Input filename: ' + filename)

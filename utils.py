@@ -1,5 +1,5 @@
 import os
-from constants import Constants
+from clamc_yield_report.constants import Constants
 
 class Utils:
 
