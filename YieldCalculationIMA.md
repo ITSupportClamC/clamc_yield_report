@@ -31,9 +31,9 @@ Interest income of a tax lot during a period is calculated as:
 
 Where,
 
-1. Ending value of accrued interest of the period: LotSumOfEndBalanceBook of the tax lot on the last day the tax lot appears in the period when LotQuantity > 0.
+1. Ending value of accrued interest of the period: LotSumOfEndBalanceBook of the tax lot on the last day the tax lot appears in the period when LotSumOfEndBalanceBook > 0.
 
-2. Starting value of accrued interest of the period: (LotSumOfEndBalanceBook - LotSumOfChangeInAIBook) of a tax lot interest accrual status record on the day the tax lot appears the first time in the period.
+2. Starting value of accrued interest of the period: (LotSumOfEndBalanceBook - LotSumOfChangeInAIBook) of a tax lot interest accrual status record on the first day the tax lot appears in the period.
 
 
 ### Interest Received By a Tax Lot
