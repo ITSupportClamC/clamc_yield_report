@@ -22,11 +22,38 @@ logger = logging.getLogger(__name__)
 getCurrentDirectory = lambda : \
 	dirname(abspath(__file__))
 
+
+
+def getTaxlotInterestDetail(positions):
+	"""
+	[Iterable] positions 
+	=> [Dictionary] tax lot id -> (starting AI, ending AI, interest received)
+	"""
+	# FIXME: to be implemented
+	return {}
+
+
+
 def getDailyInterestAccrualDetailPositions(file):
 	return ReportIMA().getDailyInterestAccrualDetailPositions(file)
 
+# def getTaxlotInterestIncome(positions):
+# 	return ReportIMA().getTaxlotInterestIncome(positions)
+
+
 def getTaxlotInterestIncome(positions):
-	return ReportIMA().getTaxlotInterestIncome(positions)
+	"""
+	[Iterable] positions 
+	=> [Dictionary] tax lot id -> interest income
+	"""
+	getInterestIncome = lambda t: \
+		t[1] - t[0] + t[2]
+
+
+	return dict(map( lambda t: (t[0], getInterestIncome(t[1]))
+				   , getTaxlotInterestDetail(positions).items()))
+
+
 
 class ReportIMA:
 
