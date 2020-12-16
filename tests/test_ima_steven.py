@@ -2,7 +2,7 @@
 # 
 
 import unittest2
-from ima import getCurrentDirectory \
+from clamc_yield_report.ima import getCurrentDirectory \
 								, getDailyInterestAccrualDetailPositions \
 								, getTaxlotInterestIncome
 from os.path import join

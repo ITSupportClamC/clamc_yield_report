@@ -9,12 +9,11 @@ import logging.config
 import os
 from datetime import datetime
 from io import StringIO
-from os.path import abspath, dirname
+from os.path import abspath, dirname, join
 from clamc_yield_report.utils import Utils
 from clamc_yield_report.constants import Constants
 
 
-import logging
 logger = logging.getLogger(__name__)
 
 
@@ -25,22 +24,15 @@ getCurrentDirectory = lambda : \
 
 
 def getTaxlotInterestDetail(positions):
-	"""
-	[Iterable] positions 
-	=> [Dictionary] tax lot id -> (starting AI, ending AI, interest received)
-	"""
-	# FIXME: to be implemented
-	return {}
+	return ReportIMA().getTaxlotInterestDetail(positions)
 
 
 
 def getDailyInterestAccrualDetailPositions(file):
 	return ReportIMA().getDailyInterestAccrualDetailPositions(file)
 
-# def getTaxlotInterestIncome(positions):
-# 	return ReportIMA().getTaxlotInterestIncome(positions)
 
-
+	
 def getTaxlotInterestIncome(positions):
 	"""
 	[Iterable] positions 
@@ -59,9 +51,11 @@ class ReportIMA:
 
 	def __init__(self):
 		#=========\add logger from configuration files\=========
-		# logging.config.fileConfig("logging_config.ini", defaults={'date':datetime.now().date().strftime('%Y-%m-%d')})
-		# self.logger = logging.getLogger("sLogger")
-		self.logger = logger
+		logging.config.fileConfig(join(Utils.get_current_directory(),"logging_config.ini"), 
+									defaults={'date':datetime.now().date().strftime('%Y-%m-%d')}
+									)
+		self.logger = logging.getLogger(__name__)
+		#self.logger = logger
 
 	def run(self, filename):
 		self.logger.info('Input filename: ' + filename)
@@ -71,7 +65,7 @@ class ReportIMA:
 		self.logger.info('The total Interest Income from the file is: ' + str(total_interest))
 
 	def getCurrentDirectory(self):
-		return dirname(abspath(__file__))
+		return Utils.get_current_directory()
 
 	def getDailyInterestAccrualDetailPositions(self, file):
 		"""
@@ -175,7 +169,7 @@ class ReportIMA:
 
 		return positions
 
-	def getTaxlotInterestIncome(self, positions):
+	def getTaxlotInterestDetail(self, positions):
 		"""
 		[List] positions
 		=> [Dictionary] ([String] tax lot id -> [Float] interest income)
@@ -272,15 +266,21 @@ class ReportIMA:
 			#--    interest received during the period
 			if tax_lot_id not in tax_lot_d:
 				tax_lot_d[tax_lot_id] = 0
-			#-- keep commented code for printing tax_lot_id|total_received|start_ai|end_ai to debug file
-			#self.logger.debug(str(tax_lot_id) + " " +
-			#	str(tax_lot_d[tax_lot_id]) + " " + 
-			#	str(starting_accured_interest_pos) + " " + 
-			#	str(ending_accured_interest_pos))
-			tax_lot_d[tax_lot_id] += ending_accured_interest_pos - starting_accured_interest_pos
+			tax_lot_d[tax_lot_id] = (starting_accured_interest_pos, ending_accured_interest_pos, tax_lot_d[tax_lot_id])
 		
-		#-- keep commented code for printing negative account to debug log if needed
-		#tax_lot_d = {x:y for x,y in tax_lot_d.items() if y<0}
-		#for tax_lot_id in tax_lot_d:
-		#	self.logger.debug(str(tax_lot_id) + " " + str(tax_lot_d[tax_lot_id]))
+		return tax_lot_d
+
+	def getTaxlotInterestIncome(self, positions):
+		tax_lot_d = self.getTaxlotInterestDetail(positions)
+		for tax_lot_id, tax_lot_t in tax_lot_d.items():
+			#if (tax_lot_id == str(1120374)):
+			#	self.logger.debug(str(tax_lot_id) + " " +
+			#						str(tax_lot_t[0]) + " " +
+			#						str(tax_lot_t[1]) + " " +
+			#						str(tax_lot_t[2]) + " " +
+			#						str(tax_lot_t))
+			#if len(tax_lot_t) == 3:
+			tax_lot_d[tax_lot_id] = tax_lot_t[1] - tax_lot_t[0] + tax_lot_t[2]
+			#else:
+			#	tax_lot_d[tax_lot_id] = 0
 		return tax_lot_d

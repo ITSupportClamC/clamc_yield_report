@@ -2,7 +2,7 @@
 # 
 
 import unittest2
-from ima import ReportIMA
+from clamc_yield_report.ima import ReportIMA
 from os.path import join
 
 

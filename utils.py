@@ -1,4 +1,5 @@
 import os
+from os.path import abspath, dirname
 from clamc_yield_report.constants import Constants
 
 class Utils:
@@ -25,3 +26,8 @@ class Utils:
 	def create_iterator(input_list):
 		for item in input_list:
 			yield item
+
+	#-- function for constucting iterator
+	@staticmethod
+	def get_current_directory():
+		return dirname(abspath(__file__))

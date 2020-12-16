@@ -3,19 +3,20 @@
 # Production data test comes here
 import unittest2
 import os
-from report import Report
+from os.path import abspath, dirname, join
+from clamc_yield_report.report import Report
+from clamc_yield_report.utils import Utils
 
 class TestReport(unittest2.TestCase):
 
     def __init__(self, *args, **kwargs):
         super(TestReport, self).__init__(*args, **kwargs)
-    
+
     def setUp(self):
         self.report = Report()
 
     def test_getpositions_1linedata(self):
-        #-- the path is relative to the report.py
-        meta_data, positions = self.report.getPositions("tests/testdata/investment positions_1linedata.txt")
+        meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions_1linedata.txt")
         #-- check the first line value
         row_count=0
         for pos in positions:
@@ -33,7 +34,7 @@ class TestReport(unittest2.TestCase):
 
     def test_getpositions_2linedata(self):
         #-- the path is relative to the report.py
-        meta_data, positions = self.report.getPositions("tests/testdata/investment positions_2linedata.txt")
+        meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions_2linedata.txt")
         # testcase of the unit test
         row_count=0
         for pos in positions:
@@ -54,7 +55,7 @@ class TestReport(unittest2.TestCase):
 
     def test_getpositions_emptypos(self):
         #-- the path is relative to the report.py
-        meta_data, positions = self.report.getPositions("tests/testdata/investment positions_emptypos.txt")
+        meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions_emptypos.txt")
         try:
             next(positions)
         except StopIteration:
@@ -70,7 +71,7 @@ class TestReport(unittest2.TestCase):
     def test_getpositions_missingcol(self):
         #-- the path is relative to the report.py
         try:
-            self.report.getPositions("tests/testdata/investment positions_missingcol.txt")
+            self.report.getPositions("clamc_yield_report/tests/testdata/investment positions_missingcol.txt")
         except KeyError:
             pass  # This is what should happen
         else:
@@ -78,7 +79,7 @@ class TestReport(unittest2.TestCase):
 
     def test_getpositions_normal(self):
         #-- the path is relative to the report.py
-        meta_data, positions = self.report.getPositions("tests/testdata/investment positions_normal.txt")
+        meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions_normal.txt")
         # testcase of the unit test
         row_count=0
         for pos in positions:
@@ -117,7 +118,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for mon_realized_return_withcash_expect in mon_realized_return_withcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
             monthly_realized_return, monthly_total_return = self.report.getReturnFromPositions(True, positions)
             self.assertAlmostEqual(monthly_realized_return, 
                                     mon_realized_return_withcash_expect, 
@@ -138,7 +139,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for mon_total_return_withcash_expect in mon_total_return_withcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
             monthly_realized_return, monthly_total_return = self.report.getReturnFromPositions(True, positions)
             self.assertAlmostEqual(monthly_total_return, 
                                     mon_total_return_withcash_expect, 
@@ -160,7 +161,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for mon_realized_return_withoutcash_expect in mon_realized_return_withoutcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
             monthly_realized_return, monthly_total_return = self.report.getReturnFromPositions(False, positions)
             self.assertAlmostEqual(monthly_realized_return, 
                                     mon_realized_return_withoutcash_expect, 
@@ -181,7 +182,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for mon_total_return_withoutcash_expect in mon_total_return_withoutcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/profit loss 2020-0" + str(month_count) +".txt")
             monthly_realized_return, monthly_total_return = self.report.getReturnFromPositions(False, positions)
             self.assertAlmostEqual(monthly_total_return, 
                                     mon_total_return_withoutcash_expect, 
@@ -212,7 +213,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for acc_nav_expect in acc_nav_withcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/investment positions 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions 2020-0" + str(month_count) +".txt")
             nav = self.report.getNavFromPositions(True, cutoff_month, impairment, meta_data, positions)
             acc_navs.append(nav)
             avg_nav = sum(acc_navs) / len(acc_navs)
@@ -238,7 +239,7 @@ class TestReport(unittest2.TestCase):
         month_count = 0
         for acc_nav_expect in acc_nav_withoutcash_expects:
             month_count += 1
-            meta_data, positions = self.report.getPositions("tests/testdata/investment positions 2020-0" + str(month_count) +".txt")
+            meta_data, positions = self.report.getPositions("clamc_yield_report/tests/testdata/investment positions 2020-0" + str(month_count) +".txt")
             nav = self.report.getNavFromPositions(False, cutoff_month, impairment, meta_data, positions)
             acc_navs.append(nav)
             avg_nav = sum(acc_navs) / len(acc_navs)
@@ -246,16 +247,16 @@ class TestReport(unittest2.TestCase):
 
 
     def test_getAccumulateReturnFromFiles_normal(self):
-        # filepaths = os.listdir("tests/testdata")
+        # filepaths = os.listdir("clamc_yield_report/tests/testdata")
         filepaths = [
-            'tests/testdata/profit loss 2020-01.txt',
-            'tests/testdata/profit loss 2020-02.txt',
-            'tests/testdata/profit loss 2020-03.txt',
-            'tests/testdata/profit loss 2020-04.txt',
-            'tests/testdata/profit loss 2020-05.txt',
-            'tests/testdata/profit loss 2020-06.txt',
-            'tests/testdata/profit loss 2020-07.txt',
-            'tests/testdata/profit loss 2020-08.txt'
+            'clamc_yield_report/tests/testdata/profit loss 2020-01.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-02.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-03.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-04.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-05.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-06.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-07.txt',
+            'clamc_yield_report/tests/testdata/profit loss 2020-08.txt'
         ]
         input_files = self._get_file_iterator(filepaths)
 
@@ -348,14 +349,14 @@ class TestReport(unittest2.TestCase):
         impairment = 3212689500
         cutoff_month = 7
         filepaths = [
-            'tests/testdata/investment positions 2020-01.txt',
-            'tests/testdata/investment positions 2020-02.txt',
-            'tests/testdata/investment positions 2020-03.txt',
-            'tests/testdata/investment positions 2020-04.txt',
-            'tests/testdata/investment positions 2020-05.txt',
-            'tests/testdata/investment positions 2020-06.txt',
-            'tests/testdata/investment positions 2020-07.txt',
-            'tests/testdata/investment positions 2020-08.txt'
+            'clamc_yield_report/tests/testdata/investment positions 2020-01.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-02.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-03.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-04.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-05.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-06.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-07.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-08.txt'
         ]
         input_files = self._get_file_iterator(filepaths)
 
@@ -386,14 +387,14 @@ class TestReport(unittest2.TestCase):
         impairment = 3212689500
         cutoff_month = 7
         filepaths = [
-            'tests/testdata/investment positions 2020-01.txt',
-            'tests/testdata/investment positions 2020-02.txt',
-            'tests/testdata/investment positions 2020-03.txt',
-            'tests/testdata/investment positions 2020-04.txt',
-            'tests/testdata/investment positions 2020-05.txt',
-            'tests/testdata/investment positions 2020-06.txt',
-            'tests/testdata/investment positions 2020-07.txt',
-            'tests/testdata/investment positions 2020-08.txt'
+            'clamc_yield_report/tests/testdata/investment positions 2020-01.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-02.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-03.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-04.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-05.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-06.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-07.txt',
+            'clamc_yield_report/tests/testdata/investment positions 2020-08.txt'
         ]
         input_files = self._get_file_iterator(filepaths)
 

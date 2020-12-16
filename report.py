@@ -16,7 +16,7 @@ import collections
 from io import StringIO
 from datetime import datetime
 from itertools import tee
-from constants import Constants
+from clamc_yield_report.constants import Constants
 from os import listdir
 from os.path import isfile, join
 from os import walk
@@ -26,11 +26,13 @@ class Report:
 
 	def __init__(self):
 		#=========\add logger from configuration files\=========
-		logging.config.fileConfig("logging_config.ini", defaults={'date':datetime.now().date().strftime('%Y-%m-%d')})
+		logging.config.fileConfig(join(Utils.get_current_directory(),"logging_config.ini"), 
+									defaults={'date':datetime.now().date().strftime('%Y-%m-%d')}
+									)
 		self.logger = logging.getLogger("sLogger")
 
 	def run(self, input_with_cash, input_cutoff_month, input_impairment, input_last_year_end_nav, upload_dir):
-		self.logger.debug('Start generating output.csv')
+		self.logger.info('Start generating output.csv')
 		self.logger.info('Input arguments: ' +
 							str(input_with_cash) + " " +
 							str(input_cutoff_month) + " " +
@@ -91,7 +93,7 @@ class Report:
 
 		#-- export data as a csv file
 		def outputCSV():
-			with open("output_" + with_cash_title + ".csv", "w", newline="") as file:
+			with open(join(Utils.get_current_directory(), "output_" + with_cash_title + ".csv"), "w", newline="") as file:
 				writer = csv.writer(file)
 				writer.writerow(column_title)
 				for x in range(0, len(average_NAV)):
@@ -110,7 +112,7 @@ class Report:
 				writer.writerow(["Cutoff Month", input_cutoff_month])	
 
 		outputCSV()
-		self.logger.debug('Generating output.csv completed')
+		self.logger.info('Generating output.csv completed')
 		
 	def getPositions(self, filename):
 		#-- read file
