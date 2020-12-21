@@ -4,7 +4,8 @@
 import unittest2
 from clamc_yield_report.ima import getCurrentDirectory \
 								, getDailyInterestAccrualDetailPositions \
-								, getTaxlotInterestIncome
+								, getTaxlotInterestIncome \
+								, getTaxlotInterestDetail
 from os.path import join
 
 
@@ -144,6 +145,20 @@ class TestImaSteven(unittest2.TestCase):
 		  , all(key in getCNEnergyTaxlots() or d[key] >=0 for key in d)
 		)
 		self.assertTrue((1 - abs(sum(d[key] for key in d)/706267464.75)) < 0.0002)
+
+
+
+	def testGetTaxlotInterestDetail(self):
+		d = getTaxlotInterestDetail(
+				list(getDailyInterestAccrualDetailPositions(
+						join(getCurrentDirectory(), 'samples', 'daily interest 2020-05.txt')
+					))
+			)
+
+		# US56501RAK23 (MFCCN 2.484 05/19/27)
+		self.assertEqual(0, d['1123235'][0])
+		self.assertAlmostEqual(5347.57, d['1123235'][1], 2)
+		self.assertAlmostEqual(5350.74, d['1123235'][2], 2)
 
 
 
